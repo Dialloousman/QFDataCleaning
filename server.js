@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const Papa = require('papaparse');
 const csvToJson = require('csvtojson');
 const fs = require('fs');
 
@@ -11,26 +10,37 @@ const PORT = 3434;
 
 const unCleanDataSetPath = path.resolve(__dirname, './DataEngineerDataSet.csv');  
 
-// (async function retrieveSourceDataFromCSV () {
-//     const jsonArrayofSourceData = await csvToJson().fromFile(unCleanDataSetPath);
-//     console.log(jsonArrayofSourceData);
-    
-//     //*** data normalization Object start date-end date
+(async function retrieveSourceDataFromCSV () {
+    const jsonArrayofSourceData = await csvToJson().fromFile(unCleanDataSetPath);
+    const dataClassificationHashTable = {};
+    const classificationAndTotals = [];
 
-//     return jsonArrayofSourceData;
-// })();
+    function classificationTotalsAndPopulateHashTable(sourceData) {
+        const datasetKeys = Object.keys(sourceData);
+        for (let key of datasetKeys) {
+            if (key === 'Classification') {
+                    if (!dataClassificationHashTable[sourceData[key]]) {
+                        dataClassificationHashTable[sourceData[key]] = 1;
+                    } else dataClassificationHashTable[sourceData[key]]+=1;
+                };
+            };
+        };
+        
+    jsonArrayofSourceData.forEach(rowDataSetfromCsv => {
+        classificationTotalsAndPopulateHashTable(rowDataSetfromCsv);
+    })
 
-const dateObject = [
-    {obJectDate: "1843"},
-    {obJectDate: "1843-56"},
-    {obJectDate: "1843 - 1923"},
-    {obJectDate: "Ca. 1842"},
-];
+    //create rows front created hashtable
+    const classificationHashTableKeys = Object.keys(dataClassificationHashTable);
+        for (let classification of classificationHashTableKeys) {
+            classificationAndTotals.push({
+                classification,
+                total: dataClassificationHashTable[classification]
+            })
+        };
 
-function dateNormalizationStartDateEndDate () {
-
-};
-
+    return classificationAndTotals;
+})();
 
 
 // Invoke server listen
