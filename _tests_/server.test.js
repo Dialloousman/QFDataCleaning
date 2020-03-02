@@ -1,0 +1,1 @@
+const { objectNumberValidateCheckForTwoDots } = require('../server');

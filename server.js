@@ -9,7 +9,6 @@ const db = require('./model/model.js');
 
 const unCleanDataSetPath = path.resolve(__dirname, './DataEngineerDataSet.csv');
 
-//* **questionSet1Solution
 async function problemOnedataCleaning() {
   const jsonArrayofSourceData = await csvToJson().fromFile(unCleanDataSetPath);
   const zeroToNineHashTable = {
@@ -67,18 +66,18 @@ async function problemOnedataCleaning() {
   });
 
   // *** Uncomment this line to console.log/visualize cleanedSet
-//   cleanedObjectNumberDataSet.forEach((cleanDataSet) => console.log('CLEANEDSET:', cleanDataSet['Object Number']));
+  //   cleanedObjectNumberDataSet.forEach((cleanDataSet) => console.log('CLEANEDSET:', cleanDataSet['Object Number']));
 }
+//* *Uncomment inovaction below to run function and run console.log on line 69 to print cleanedSet*/
 // problemOnedataCleaning();
 
 
-//* ** questionSet3Solution
 async function problem3TrackingRunningTotals() {
   const jsonArrayofSourceData = await csvToJson().fromFile(unCleanDataSetPath);
   const dataClassificationHashTable = {};
   const classificationAndTotals = [];
 
-  
+
   function classificationTotalsAndPopulateHashTable(sourceData) {
     const datasetKeys = Object.keys(sourceData);
     for (const key of datasetKeys) {
@@ -127,11 +126,12 @@ async function problem3TrackingRunningTotals() {
 
 
   //* ** uncomment console.log below to print classification and totals from DB
-  //   readClassificationAndTotalsFromDB();
+  //   console.log(readClassificationAndTotalsFromDB());
 
   return classificationAndTotals;
 }
-problem3TrackingRunningTotals();
+//* *Uncomment inovaction below to run */
+// problem3TrackingRunningTotals();
 
 
 // Invoke server listen
