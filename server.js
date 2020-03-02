@@ -10,11 +10,11 @@ const PORT = 3434;
 
 const unCleanDataSetPath = path.resolve(__dirname, './DataEngineerDataSet.csv');  
 
-(async function retrieveSourceDataFromCSV () {
+async function retrieveSourceDataFromCSV () {
     const jsonArrayofSourceData = await csvToJson().fromFile(unCleanDataSetPath);
     const dataClassificationHashTable = {};
     const classificationAndTotals = [];
-
+    
     function classificationTotalsAndPopulateHashTable(sourceData) {
         const datasetKeys = Object.keys(sourceData);
         for (let key of datasetKeys) {
@@ -38,9 +38,13 @@ const unCleanDataSetPath = path.resolve(__dirname, './DataEngineerDataSet.csv');
                 total: dataClassificationHashTable[classification]
             })
         };
+    
+        console.log('classificationAndTotals: ');
+        return classificationAndTotals;
+    };
 
-    return classificationAndTotals;
-})();
+
+
 
 
 // Invoke server listen
