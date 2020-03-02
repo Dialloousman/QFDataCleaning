@@ -5,6 +5,7 @@ const csvToJson = require('csvtojson');
 const app = express();
 const PORT = 3434;
 
+const db = require('./model/model.js');
 
 const unCleanDataSetPath = path.resolve(__dirname, './DataEngineerDataSet.csv');
 
@@ -101,9 +102,10 @@ async function problem3TrackingRunningTotals() {
     });
   }
 
+  console.log('classificationAndTotals', classificationAndTotals);
   return classificationAndTotals;
 }
-// problem3TrackingRunningTotals();
+problem3TrackingRunningTotals();
 
 
 // Invoke server listen
