@@ -78,6 +78,7 @@ async function problem3TrackingRunningTotals() {
   const dataClassificationHashTable = {};
   const classificationAndTotals = [];
 
+  
   function classificationTotalsAndPopulateHashTable(sourceData) {
     const datasetKeys = Object.keys(sourceData);
     for (const key of datasetKeys) {
@@ -87,6 +88,25 @@ async function problem3TrackingRunningTotals() {
         } else dataClassificationHashTable[sourceData[key]] += 1;
       }
     }
+  }
+
+  function writeClassificationAndTotalsToDB(classificationAndTotalsRow) {
+    const queryString = 'INSERT INTO classification_totals (Classification, Totals) VALUES ($1, $2)';
+    const valuesToInsert = [classificationAndTotalsRow.classification, classificationAndTotalsRow.total];
+
+    db.query(queryString, valuesToInsert, (err, result) => {
+      if (err) return ('Error inserting into DB', err);
+    });
+  }
+
+  function readClassificationAndTotalsFromDB() {
+    const queryString = 'SELECT * FROM classification_totals';
+
+    db.query(queryString, (err, result) => {
+      if (err) return ('Error inserting into DB', err);
+      const classficiationandTotalsfromDb = result.rows;
+      return classficiationandTotalsfromDb;
+    });
   }
 
   jsonArrayofSourceData.forEach((rowDataSetfromCsv) => {
@@ -102,20 +122,16 @@ async function problem3TrackingRunningTotals() {
     });
   }
 
-  function writeClassificationAndTotalsToDB(classificationAndTotalsRow) {
-    const queryString = 'INSERT INTO classification_totals (Classification, Totals) VALUES ($1, $2)';
-    const valuesToInsert = [classificationAndTotalsRow.classification, classificationAndTotalsRow.total];
-
-    db.query(queryString, valuesToInsert, (err, result) => {
-      if (err) return ('Error inserting into DB', err);
-    });
-  }
-
-  //write to database 
+  // ***iterate over classificationAndTotals array of objects and write to database ---> DB has already been populated so no need to have this command active
   //   classificationAndTotals.forEach((classRow) => writeClassificationAndTotalsToDB(classRow));
+
+
+  //* ** uncomment console.log below to print classification and totals from DB
+  //   readClassificationAndTotalsFromDB();
+
   return classificationAndTotals;
 }
-// problem3TrackingRunningTotals();
+problem3TrackingRunningTotals();
 
 
 // Invoke server listen
