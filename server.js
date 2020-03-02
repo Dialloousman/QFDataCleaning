@@ -102,24 +102,20 @@ async function problem3TrackingRunningTotals() {
     });
   }
 
-  //   console.log('classificationAndTotals', classificationAndTotals);
-  // write to db
-
   function writeClassificationAndTotalsToDB(classificationAndTotalsRow) {
-    // create query string to insert new message
     const queryString = 'INSERT INTO classification_totals (Classification, Totals) VALUES ($1, $2)';
-
     const valuesToInsert = [classificationAndTotalsRow.classification, classificationAndTotalsRow.total];
+
     db.query(queryString, valuesToInsert, (err, result) => {
-    // error handle
       if (err) return ('Error inserting into DB', err);
-    //   console.log('rows successfully inserted', result);
     });
   }
-  classificationAndTotals.forEach(classRow => writeClassificationAndTotalsToDB(row));
+
+  //write to database 
+  //   classificationAndTotals.forEach((classRow) => writeClassificationAndTotalsToDB(classRow));
   return classificationAndTotals;
 }
-problem3TrackingRunningTotals();
+// problem3TrackingRunningTotals();
 
 
 // Invoke server listen
