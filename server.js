@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
 const csvToJson = require('csvtojson');
-const fs = require('fs');
-
 
 const app = express();
 const PORT = 3434;
@@ -11,7 +9,7 @@ const PORT = 3434;
 const unCleanDataSetPath = path.resolve(__dirname, './DataEngineerDataSet.csv');
 
 //* **questionSet1Solution
-async function dataCleaningProblemOne() {
+async function problemOnedataCleaning() {
   const jsonArrayofSourceData = await csvToJson().fromFile(unCleanDataSetPath);
   const zeroToNineHashTable = {
     0: 0,
@@ -57,7 +55,7 @@ async function dataCleaningProblemOne() {
     }
     return true;
   }
-  
+
   jsonArrayofSourceData.forEach((rowDataSetfromCsv) => {
     const currentRowObjectNumber = rowDataSetfromCsv['Object Number'];
     const currElementContainsTwoDots = objectNumberValidateCheckForTwoDots(currentRowObjectNumber);
@@ -67,14 +65,14 @@ async function dataCleaningProblemOne() {
     }
   });
 
-  // test console.log for cleanedSet
+  // *** Uncomment this line to console.log/visualize cleanedSet
 //   cleanedObjectNumberDataSet.forEach((cleanDataSet) => console.log('CLEANEDSET:', cleanDataSet['Object Number']));
 }
-dataCleaningProblemOne();
+// problemOnedataCleaning();
+
 
 //* ** questionSet3Solution
-// TODO: fix this name
-async function retrieveSourceDataFromCSV() {
+async function problem3TrackingRunningTotals() {
   const jsonArrayofSourceData = await csvToJson().fromFile(unCleanDataSetPath);
   const dataClassificationHashTable = {};
   const classificationAndTotals = [];
@@ -94,7 +92,7 @@ async function retrieveSourceDataFromCSV() {
     classificationTotalsAndPopulateHashTable(rowDataSetfromCsv);
   });
 
-  // create rows front created hashtable
+  // create data rows from created hashtable
   const classificationHashTableKeys = Object.keys(dataClassificationHashTable);
   for (const classification of classificationHashTableKeys) {
     classificationAndTotals.push({
@@ -105,7 +103,7 @@ async function retrieveSourceDataFromCSV() {
 
   return classificationAndTotals;
 }
-// retrieveSourceDataFromCSV();
+// problem3TrackingRunningTotals();
 
 
 // Invoke server listen
